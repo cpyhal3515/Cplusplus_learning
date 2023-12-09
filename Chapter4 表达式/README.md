@@ -71,6 +71,23 @@ for(decltype(cnt) ix = 0; ix != ivec.size(); ++ix, --cnt)
 double slope = static_cast<double>(j)/i;
 ```
 
-- `const_cast` ：只能改变运算对象的底层 const，常用于有函数重载的上下文中。
+- `const_cast` ：只能改变运算对象的底层 const，常用于有函数重载的上下文中。例如在下面的函数中：
+
+```C++
+const string &shorterString(const string &s1, const string &s2)
+{
+  return s1.size() <= s2.size() ? s1 : s2;
+}
+```
+
+当我们需要一种新的 `shorterString` 函数时，当参量不是常量时返回一个普通的引用就可以使用 `const_cast` 实现这一点：
+
+```C++
+const string &shorterString(string &s1, string &s2)
+{
+  auto &r = shorterString(const_cast<const string&>(s1), const_cast<const string&>(s2));
+  return const_cast<const string&>(r);
+}
+```
 
 **Tips：非必要不要使用强制类型转换**
