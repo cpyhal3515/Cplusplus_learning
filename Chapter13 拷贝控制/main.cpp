@@ -104,6 +104,7 @@ int main()
     for (auto it = tmp.begin(); it != tmp.end(); ++it)
     {
         auto beg = it->c_str();
+
         for (int i = 0; i < it->size(); ++i)
         {
             cout << beg[i];
